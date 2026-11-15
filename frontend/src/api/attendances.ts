@@ -86,11 +86,6 @@ export async function getAttendance(id: number): Promise<Attendance> {
 	return data;
 }
 
-/** DELETE /api/attendances/:id (ADMIN only) */
-export async function deleteAttendance(id: number): Promise<void> {
-	await api(`/attendances/${id}`, { method: "DELETE" });
-}
-
 export async function getMyAttendances(
 	query: Omit<AttendanceQuery, "userId"> = {},
 ) {

@@ -5,7 +5,6 @@ import {
 	ChevronRight,
 	Eye,
 	Pencil,
-	Trash2,
 } from "lucide-react";
 
 import type { Attendance } from "@/api/attendances";
@@ -50,7 +49,6 @@ type AttendanceTableProps = {
 	range?: AttendanceRange;
 	onView?: (record: Attendance) => void;
 	onEdit?: (record: Attendance) => void;
-	onDelete?: (record: Attendance) => void;
 };
 
 export function AttendanceTable({
@@ -62,7 +60,6 @@ export function AttendanceTable({
 	range = "day",
 	onView,
 	onEdit,
-	onDelete,
 }: AttendanceTableProps) {
 	const { items, pagination, loading, refreshing, error, reload } =
 		useAttendances(date, page, PAGE_SIZE, scope, { userId, range });
@@ -195,18 +192,6 @@ export function AttendanceTable({
 															onClick={() => onEdit(record)}
 														>
 															<Pencil />
-														</Button>
-													)}
-													{onDelete && (
-														<Button
-															variant="ghost"
-															size="icon"
-															title="Delete"
-															aria-label={`Delete ${name}`}
-															className="text-destructive hover:bg-destructive/10 hover:text-destructive"
-															onClick={() => onDelete(record)}
-														>
-															<Trash2 />
 														</Button>
 													)}
 												</div>
