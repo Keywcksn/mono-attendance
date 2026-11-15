@@ -6,7 +6,6 @@ Simple web-application for attendance
 - Web application for admin where they can see employee records
 
 # result
-  # result
 
 <table>
   <tr>
@@ -15,7 +14,7 @@ Simple web-application for attendance
   </tr>
   <tr>
     <td><img src="./images/check-out-not.png" alt="Employee not check out yet" /></td>
-    <td><img src="./images/attendance-detail" alt="Check-out" /></td>
+    <td><img src="./images/attendance-detail.png" alt="Attendance detail" /></td>
   </tr>
   <tr>
     <td><img src="./images/login.png" alt="Login" /></td>
