@@ -1,0 +1,17 @@
+.git
+.gitignore
+.dockerignore
+
+**/node_modules
+**/dist
+**/coverage
+**/*.tsbuildinfo
+
+# Never bake local secrets into images
+.env
+**/.env
+**/.env.local
+**/.env.*.local
+
+*.log
+README-local.md

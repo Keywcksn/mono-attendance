@@ -4,12 +4,22 @@
   "description": "Simple web-application for attendance",
   "main": "index.js",
   "scripts": {
-    "dev:backend": "npm run start:dev --workspace=backend",
-    "dev:frontend": "npm run dev --workspace=frontend",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "build:backend": "npm run build --workspace=backend",
-    "build:frontend": "npm run build --workspace=frontend",
-    "lint": "npm run lint --workspace=backend && npm run lint --workspace=frontend"
+    "start:dev": "pnpm --filter backend start:dev",
+    "dev:backend": "pnpm run docker:deps && pnpm run start:dev",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "dev": "concurrently \"pnpm run dev:backend\" \"pnpm run dev:frontend\"",
+    "seed": "pnpm run docker:deps && pnpm --filter backend seed",
+    "build:backend": "pnpm --filter backend build",
+    "build:frontend": "pnpm --filter frontend build",
+    "lint": "pnpm --filter backend lint && pnpm --filter frontend lint",
+    "docker:dev": "docker compose up --build",
+    "docker:up": "docker compose up -d --build",
+    "docker:deps": "docker compose up -d --wait postgres redis",
+    "docker:ps": "docker compose ps",
+    "docker:logs": "docker compose logs -f",
+    "docker:seed": "docker compose exec -T backend node dist/database/seed.js",
+    "docker:down": "docker compose down",
+    "docker:reset": "docker compose down -v"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
@@ -21,7 +31,7 @@
     "packageManager": {
       "name": "pnpm",
       "version": "12.18.0",
-      "onFail": "download"
+      "onFail": "warn"
     }
   },
   "packageManager": "pnpm@12.18.0"

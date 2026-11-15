@@ -1,18 +1,37 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { DepartmentsService } from './departments.service.js';
+import { Test, type TestingModule } from "@nestjs/testing";
+import { getRepositoryToken } from "@nestjs/typeorm";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-describe('DepartmentsService', () => {
-  let service: DepartmentsService;
+import { DepartmentsService } from "./departments.service";
+import { Department } from "./entities/department.entity";
+import { User } from "../users/entities/user.entity";
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [DepartmentsService],
-    }).compile();
+describe("DepartmentsService", () => {
+	let service: DepartmentsService;
+	const departmentRepo = {
+		find: vi.fn(),
+		findOne: vi.fn(),
+		count: vi.fn(),
+		create: vi.fn(),
+		save: vi.fn(),
+	};
+	const userRepo = { createQueryBuilder: vi.fn(), manager: { createQueryBuilder: vi.fn() } };
 
-    service = module.get<DepartmentsService>(DepartmentsService);
-  });
+	beforeEach(async () => {
+		vi.clearAllMocks();
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+		const module: TestingModule = await Test.createTestingModule({
+			providers: [
+				DepartmentsService,
+				{ provide: getRepositoryToken(Department), useValue: departmentRepo },
+				{ provide: getRepositoryToken(User), useValue: userRepo },
+			],
+		}).compile();
+
+		service = module.get<DepartmentsService>(DepartmentsService);
+	});
+
+	it("should be defined", () => {
+		expect(service).toBeDefined();
+	});
 });

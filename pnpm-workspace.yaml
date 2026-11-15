@@ -1,3 +1,7 @@
 packages:
   - 'backend'
   - 'frontend'
+
+# Allow bcrypt's native addon build/install scripts (pnpm blocks them by default).
+allowBuilds:
+  bcrypt: true

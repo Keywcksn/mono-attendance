@@ -5,8 +5,8 @@ import {
 	CreateDateColumn,
 	UpdateDateColumn,
 	Index,
-    ManyToOne,
-    JoinColumn,
+	ManyToOne,
+	JoinColumn,
 } from "typeorm";
 import { Department } from "../../departments/entities/department.entity";
 
@@ -27,32 +27,51 @@ export class User {
 	})
 	password?: string;
 
-    @Column({ type: "varchar", name: "full_name", length: 255, default: "-" })
+	@Column({ type: "varchar", name: "full_name", length: 255, default: "-" })
 	fullName!: string;
 
-    @Column({
+	@Column({
 		type: "enum",
-		enum: ["employee", "administrator"],
+		enum: ["EMPLOYEE", "ADMIN"],
 		name: "role",
-		default: "employee",
+		default: "EMPLOYEE",
 	})
 	role!: string;
 
-    @ManyToOne(() => Department, { nullable: false })
+	@Column({
+		type: "enum",
+		enum: ["MALE", "FEMALE"],
+		name: "gender",
+		default: "MALE",
+	})
+	gender!: string;
+
+	@Column({
+		type: "varchar",
+		length: 25,
+		name: "phone",
+		nullable: true,
+	})
+	phone?: string;
+
+	@Column({ type: "int", nullable: false, name: "department_id" })
+	departmentId!: number;
+
+	@ManyToOne(() => Department, { nullable: false })
 	@JoinColumn({ name: "department_id" })
 	department!: Department;
 
-    @Column({ name: "is_active", type: "boolean", default: false })
-    isActive!: boolean;
+	@Column({ name: "is_active", type: "boolean", default: false })
+	isActive!: boolean;
 
-    @Column({
+	@Column({
 		name: "metadata",
 		type: "jsonb",
 		nullable: true,
 	})
 	metadata?: Record<string, any>;
 
-    @CreateDateColumn({ name: "created_at" })
+	@CreateDateColumn({ name: "created_at" })
 	createdAt!: Date;
 
 	@UpdateDateColumn({ name: "updated_at" })
